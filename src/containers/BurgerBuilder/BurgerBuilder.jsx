@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Aux from '../../hoc/aux'
 import Burger from './../../components/Burger/Burger';
 import BuildControls from './../../components/Burger/BuildControls/BuildControls';
 const INGREDIENT_PRICES={
@@ -31,19 +30,34 @@ const INGREDIENT_PRICES={
   }
   
   removeIngredientHandler =(type) => {
-    
+    const oldCount=this.state.ingredients[type];
+    if(oldCount<=0)
+      return;
+    const updatedIngredient=oldCount-1;
+    const updatedIngredients={...this.state.ingredients};
+    updatedIngredients[type]=updatedIngredient;
+    const priceDeduction = INGREDIENT_PRICES[type];
+    const oldPrice= this.state.totalPrice;
+    const newPrice= oldPrice-priceDeduction;
+    this.setState({ingredients:updatedIngredients,totalPrice:newPrice})
   }
 
   render() {
+    const disabledInfo = {...this.state.ingredients};
+    for(let key in disabledInfo){
+      disabledInfo[key] =  disabledInfo[key] <= 0
+    }
     return (
-      <Aux>
+      <React.Fragment>
         <div>
           <Burger ingredients={this.state.ingredients}/>
         </div>
         <div>
-           <BuildControls ingedientAdded={  this.addIngredientHandler}/>
+           <BuildControls  ingedientAdded={  this.addIngredientHandler} 
+            disabled={disabledInfo}
+            ingedientRemove={this.removeIngredientHandler} />
         </div>
-      </Aux>
+      </React.Fragment>
     )
   }
 } 
