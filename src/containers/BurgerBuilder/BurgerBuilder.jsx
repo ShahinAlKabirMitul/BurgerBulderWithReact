@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Burger from './../../components/Burger/Burger';
 import BuildControls from './../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 const INGREDIENT_PRICES={
   salad:0.5,
   cheese:0.4,
@@ -27,7 +29,7 @@ const INGREDIENT_PRICES={
         .reduce( ( sum, el ) => {
             return sum + el;
         }, 0 );
-    console.log(sum);
+   // console.log(sum);
     this.setState( { purchaseble: sum > 0 } );
 }
 
@@ -66,16 +68,15 @@ const INGREDIENT_PRICES={
     }
     return (
       <React.Fragment>
-        <div>
-          <Burger ingredients={this.state.ingredients}/>
-        </div>
-        <div>
+           <Modal>
+              <OrderSummary ingredients={this.state.ingredients}></OrderSummary>
+            </Modal>     
+           <Burger ingredients={this.state.ingredients}/>
            <BuildControls  ingedientAdded={  this.addIngredientHandler} 
             disabled={disabledInfo}
             price={this.state.totalPrice}
             purchaseble={this.state.purchaseble}
             ingedientRemove={this.removeIngredientHandler} />
-        </div>
       </React.Fragment>
     )
   }
