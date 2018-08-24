@@ -55,6 +55,7 @@ const INGREDIENT_PRICES={
         <div>
            <BuildControls  ingedientAdded={  this.addIngredientHandler} 
             disabled={disabledInfo}
+            price={this.state.totalPrice}
             ingedientRemove={this.removeIngredientHandler} />
         </div>
       </React.Fragment>
