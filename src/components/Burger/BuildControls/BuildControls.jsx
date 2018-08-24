@@ -11,7 +11,7 @@ const controls = [
 const buildControls = (props) => (
     <div className={classes.BuildControls}>
      {controls.map(ctr=>(
-         <BuildControl key={ctr.lable} lable={ctr.lable} />
+         <BuildControl ingedientAdded={ ()=>props.ingedientAdded(ctr.type)} key={ctr.lable} lable={ctr.lable} />
      ))}
     </div>
 );
